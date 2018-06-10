@@ -1,10 +1,9 @@
-var chai = require('chai')
+var chai = require('chai'),
 	should =  chai.should,
 	expect = chai.expect,
 	Promise=require('bluebird'),
 	request=require('superagent-promise')(require('superagent'), Promise),
 	chaiAsPromised = require('chai-as-promised');
-
 chai.use(chaiAsPromised);
 
 var url = process.env.URL || 'http://localhost:8000/todos';
@@ -27,7 +26,7 @@ describe('Cross Origin Requests', function(){
 	});
 
 	it('should allow all origins', function(){
-		return header(result, 'access-control-allow-origin').to.equal('*');
+		return assert(result, "header.access-control-allow-origin").to.equal('*');
 	});
 });
 
@@ -144,8 +143,3 @@ describe('Delete Todo Item', function(){
  function assert(result, prop) {
  	return expect(result).to.eventually.have.deep.property(prop)
  }
-
- function header(result, prop) {
- 	return expect(result).to.eventually.have.deep.property("header")[prop]
- }
-
